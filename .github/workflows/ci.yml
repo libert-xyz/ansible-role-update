@@ -46,7 +46,7 @@ jobs:
           - centos8
           - ubuntu18
           - ubuntu20
-          - amazonlinux2
+          #- amazonlinux2
 
     steps:
       - name: Check out the codebase.
