@@ -5,8 +5,7 @@ driver:
   name: docker
 platforms:
   - name: instance
-    #image: "libertxyz/docker-ansible-${MOLECULE_DISTRO:-centos8}:latest"
-    image: "libertxyz/docker-ansible-ubuntu20:latest"
+    image: "libertxyz/docker-ansible-${MOLECULE_DISTRO:-centos8}:latest"
     command: /sbin/init
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
@@ -14,5 +13,5 @@ platforms:
     pre_build_image: true
 provisioner:
   name: ansible
-  # playbooks:
-  #   converge: ${MOLECULE_PLAYBOOK:-converge.yml}
+  playbooks:
+    converge: ${MOLECULE_PLAYBOOK:-converge.yml}
