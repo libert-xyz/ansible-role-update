@@ -49,7 +49,7 @@ None
 
 *Inside `vars/main.yml`*:
 
-    update_reboot: yes
+    update_reboot: no
 
 
 ## Compatibility
