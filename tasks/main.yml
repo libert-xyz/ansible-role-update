@@ -1,0 +1,60 @@
+---
+
+- name: Update / Upgrade apt (Debian)
+  register: updatedebian
+  apt:
+    update_cache: yes
+    force_apt_get: yes
+    upgrade: "{{update_upgrade_command}}"
+    cache_valid_time: "{{update_cache_valid_time}}"
+  when: ansible_os_family == 'Debian'
+
+- name: Autoremove packages (Debian)
+  apt:
+    autoremove: "{{update_autoremove}}"
+  when:
+    - ansible_os_family == 'Debian'
+    - update_autoremove == 'yes'
+
+- name: Update / Upgrade yum (RedHat)
+  yum:
+    name: "*"
+    update_cache: yes
+    state: latest
+  when: ansible_os_family == 'RedHat'
+
+- name: Install yum-utils (RedHat)
+  package:
+    name: yum-utils
+  when: ansible_os_family == 'RedHat'
+
+
+- name: Check if a reboot is required (Debian)
+  stat:
+    path: /var/run/reboot-required
+  register: reboot_required_debian
+  when: ansible_os_family == 'Debian'
+
+
+- name: Check if a reboot is required (RedHat)
+  shell: needs-restarting -r
+  register: reboot_required_redhat
+  failed_when: not reboot_required_redhat.failed
+  changed_when: "reboot_required_redhat.rc == 1"
+  when: ansible_os_family == 'RedHat'
+
+- name: Reboot Machine  (Debian)
+  debug:
+    msg: "Restarting Machine"
+  when:
+    - ansible_os_family == 'Debian'
+    - reboot_required_debian.stat.exists
+  notify: reboot machine
+
+- name: Reboot Machine  (RedHat)
+  debug:
+    msg: "Restarting Machine"
+  when:
+    - ansible_os_family == 'RedHat'
+    - reboot_required_redhat.rc != 0
+  notify: reboot machine

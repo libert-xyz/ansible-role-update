@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  tasks:
+    - name: "Include role"
+      include_role:
+        name: "ansible-role-update"
