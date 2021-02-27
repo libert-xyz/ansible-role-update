@@ -26,7 +26,7 @@ For APT (Debian) only: update the apt cache if it's older than the cache_valid_t
 
     update_cache_valid_time: 300
 
-When updating core libraries, a reboot may be required. Here you can select to:
+When updating core libraries or services, a reboot may be required. Here you can select to:
  "yes": Always reboot when core libraries have changed.
  "no": Never reboot
 

@@ -1,0 +1,5 @@
+---
+- name: rebooting machine
+  reboot:
+    reboot_timeout: 300
+    test_command: whoami
