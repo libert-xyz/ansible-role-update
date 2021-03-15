@@ -53,5 +53,5 @@
   when:
     - ansible_connection != "docker"
     - update_reboot | bool
-    - reboot_required_debian.stat.exists | default(no) or
-      reboot_required_redhat.changed | default(no)
+    - reboot_required_debian.stat.exists | default(false) or
+      reboot_required_redhat.changed | default(false)
